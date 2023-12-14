@@ -1,0 +1,11 @@
+.user {
+    margin-left: 5px;
+    font-weight: bolder;
+    color: #333;
+    text-decoration: none;
+}
+
+.user:hover{
+    text-decoration: underline;
+    color: blueviolet
+}
