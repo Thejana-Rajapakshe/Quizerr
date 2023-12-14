@@ -2,6 +2,7 @@ import User from '../models/User.model';
 import jwt from 'jsonwebtoken';
 
 const signin = async (req : any, res : any, next : any) => {
+    const tempToken = "this is only a token for development"
     try{
         let user = await User.findOne({"email" : req.body.email});
         if(!user){
@@ -11,7 +12,7 @@ const signin = async (req : any, res : any, next : any) => {
             return res.status(401).send({error: "Email and password don't match."});
         }
 
-        const token = jwt.sign({_id: user._id}, "silly token DEBUG DEVMODE");
+        const token = jwt.sign({_id: user._id}, tempToken);
         res.cookie('t', token, {expire: (new Date() as unknown) as number + 99999999});
 
         return res.json({
@@ -44,7 +45,7 @@ const requireSignin = (req : any, res : any, next : any) => {
     }
     
 
-    jwt.verify(token, "silly token DEBUG DEVMODE", (err: any, decode: any) => {
+    jwt.verify(token, tempToken, (err: any, decode: any) => {
         if(err){
             return res.status(401).json({
                 message: "Failed to authenticate"
